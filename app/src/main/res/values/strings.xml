@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">GlobeClock</string>
+    <string name="label_title">标题</string>
+    <string name="label_zone">时区</string>
+    <string name="label_second">秒针</string>
+    <string name="label_secOn">显示秒针</string>
+    <string name="label_secOff">不显示秒针</string>
+    <string name="label_font">字体</string>
+    <string name="label_bigsize">大</string>
+    <string name="label_midsize">中</string>
+    <string name="label_smosize">小</string>
+    <string name="cfg_title">title</string>
+    <string name="cfg_zone">zone</string>
+    <string name="cfg_second">second</string>
+    <string name="cfg_fontsize">fontsize</string>
+    <string name="init_title">Chicago</string>
+    <string name="init_zone">America/Chicago</string>
+    <string name="weeks">日一二三四五六</string>
+</resources>

@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/widget_margin">
+
+    <TextView
+            android:id="@+id/aTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="00:00"
+            android:textColor="#ffffff"
+            android:textSize="48sp"
+            android:background="@android:color/transparent"
+            android:fontFamily="sans-serif-light"/>
+    <TextView
+            android:id="@+id/aTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/aTime"
+            android:text="@string/app_name"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:background="@android:color/transparent"
+            android:fontFamily="sans-serif-light"/>
+
+</RelativeLayout>
