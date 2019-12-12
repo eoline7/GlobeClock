@@ -41,6 +41,9 @@ public class ClockService extends Service {
             String zone = cfg.getString(getString(R.string.cfg_zone), getString(R.string.init_zone));
             boolean boolsec = cfg.getBoolean(getString(R.string.cfg_second), false);
             int fontsize = cfg.getInt(getString(R.string.cfg_fontsize), 48);
+            int font2 = 12;
+            if(fontsize<48) font2=9;
+            if(fontsize>48) font2=16;
 
             Calendar ca = Calendar.getInstance();
             TimeZone cur_zone = TimeZone.getTimeZone(zone);
@@ -63,6 +66,7 @@ public class ClockService extends Service {
             views.setTextViewText(R.id.aTime, timeText);
             views.setTextViewText(R.id.aTitle, titleText);
             views.setTextViewTextSize(R.id.aTime, TypedValue.COMPLEX_UNIT_SP, fontsize);
+            views.setTextViewTextSize(R.id.aTitle, TypedValue.COMPLEX_UNIT_SP, font2);
 
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(getApplicationContext());
             ComponentName componentName = new ComponentName(getApplicationContext(), ClockWidget.class);

@@ -12,7 +12,7 @@
             android:textColor="#ffffff"
             android:textSize="48sp"
             android:background="@android:color/transparent"
-            android:fontFamily="sans-serif-light"/>
+            android:fontFamily="sans-serif-thin"/>
     <TextView
             android:id="@+id/aTitle"
             android:layout_width="wrap_content"
@@ -23,6 +23,6 @@
             android:textColor="#ffffff"
             android:textSize="12sp"
             android:background="@android:color/transparent"
-            android:fontFamily="sans-serif-light"/>
+            android:fontFamily="sans-serif-thin"/>
 
 </RelativeLayout>
