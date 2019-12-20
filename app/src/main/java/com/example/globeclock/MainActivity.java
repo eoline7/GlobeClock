@@ -5,12 +5,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
     String _key_zone;
     String _key_second;
     String _key_fontsize;
+
+    protected static final int FLASH_ZONE_TIME = 1;
+    Timer mTimer;
+    TimerTask mTask;
+    Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +105,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.what==FLASH_ZONE_TIME) {
+                    flashZonetime();
+                }
+            }
+        };
+        mTask = new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(FLASH_ZONE_TIME);
+            }
+        };
+        mTimer = new Timer();
+        mTimer.schedule(mTask, 0, 1000);
+
         Switch sw_second = findViewById(R.id.aSecond);
         sw_second.setChecked(_second);
         sw_second.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -142,6 +169,20 @@ public class MainActivity extends AppCompatActivity {
         String str = String.format("<h2>%s</h2>%s", getString(R.string.label_zone), _zone);
         tv.setText(Html.fromHtml(str,0));
     }
+    void flashZonetime() {
+        TextView tv = findViewById(R.id.aZoneTime);
+        Calendar ca = Calendar.getInstance();
+        TimeZone cur_zone = TimeZone.getTimeZone(_zone);
+        ca.setTimeZone(cur_zone);
+        int hh = ca.get(Calendar.HOUR_OF_DAY);
+        int mm = ca.get(Calendar.MINUTE);
+        int ss = ca.get(Calendar.SECOND);
+        if (_second) {
+            tv.setText(String.format("%1$02d:%2$02d:%3$02d", hh, mm, ss));
+        } else {
+            tv.setText(String.format("%1$02d:%2$02d", hh, mm));
+        }
+    }
     void showSecSwitch() {
         TextView tv = findViewById(R.id.aSecText);
         String onoff = getString(_second ? R.string.label_secOn : R.string.label_secOff);
@@ -166,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        mTimer.cancel();
         SharedPreferences setinfo = getPreferences(Activity.MODE_PRIVATE);
         setinfo.edit()
                 .putString(_key_title, _title)

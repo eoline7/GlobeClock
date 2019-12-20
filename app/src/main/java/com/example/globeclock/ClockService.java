@@ -27,6 +27,11 @@ public class ClockService extends Service {
         mTimer.schedule(new MyTimerTask(), 0, 1000);
     }
 
+    @Override
+    public void onDestroy() {
+        mTimer.cancel();
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -42,8 +47,8 @@ public class ClockService extends Service {
             boolean boolsec = cfg.getBoolean(getString(R.string.cfg_second), false);
             int fontsize = cfg.getInt(getString(R.string.cfg_fontsize), 48);
             int font2 = 12;
-            if(fontsize<48) font2=9;
-            if(fontsize>48) font2=16;
+            if (fontsize < 48) font2 = 9;
+            if (fontsize > 48) font2 = 16;
 
             Calendar ca = Calendar.getInstance();
             TimeZone cur_zone = TimeZone.getTimeZone(zone);
@@ -52,15 +57,14 @@ public class ClockService extends Service {
             int mm = ca.get(Calendar.MINUTE);
             int ss = ca.get(Calendar.SECOND);
             String timeText;
-            if(boolsec) {
+            if (boolsec) {
                 timeText = String.format("%1$02d:%2$02d:%3$02d", hh, mm, ss);
-            }
-            else {
+            } else {
                 timeText = String.format("%1$02d:%2$02d", hh, mm);
             }
             int dw = ca.get(Calendar.DAY_OF_WEEK);
             String weeks = getString(R.string.weeks);
-            String titleText = String.format("%1$s / 周%2$s", title, weeks.substring(dw-1,dw));
+            String titleText = String.format("%1$s / 周%2$s", title, weeks.substring(dw - 1, dw));
 
             RemoteViews views = new RemoteViews(getPackageName(), R.layout.clock_widget);
             views.setTextViewText(R.id.aTime, timeText);
